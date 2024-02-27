@@ -3,7 +3,10 @@ function buscarPorCURP() {
 
     // Validar que el campo no esté vacío
     if (curp.trim() === '') {
-        alert('Ingrese un CURP válido');
+        var toastElement = document.getElementById('liveToast');
+        // Activa el toast de Bootstrap
+        var toast = new bootstrap.Toast(toastElement);
+        toast.show();
         return;
     }
 
@@ -13,8 +16,13 @@ function buscarPorCURP() {
         url: 'resourcesdata/core/buscador.php',
         data: { curp: curp },
         success: function(response) {
-            // Mostrar los resultados en la tabla
-            $('#resultados').html(response);
+            if (response.length > 0) {
+                $('#resultados').html(response);
+            } else {
+                //$('#resultados').html(response);
+            }
+
+            
         },
         error: function(error) {
             console.error('Error en la solicitud AJAX:', error);
